@@ -34,11 +34,11 @@ class Solver:
     def get_result(self):
         return round(self.metric(self.y_pred, self.y_test), 3)
 
-    def evaluate(self, vectors_1: List, vectors_2: List, labels_: List, encode_labels=False) -> float:
+    def evaluate(self, vectors_1: List, vectors_2: List, labels_: List, task: str) -> float:
         vectors = self.cosine_vectors(vectors_1, vectors_2)
-        if encode_labels:
+        if task == 'nli':
             labels = self.encode_labels(labels_)
-        else:
+        else if task == 'sts':
             labels = labels_
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(vectors, labels, test_size=0.1,
                                                                                 random_state=42)
